@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import * as actions from '../actions/';
 import {bindActionCreators} from 'redux';
 import * as types from '../constants/actionTypes';
+import AddUser from './add-user'
 
 class Users extends React.Component {
   constructor(props) {
@@ -39,6 +40,7 @@ class Users extends React.Component {
               </ul>
               <button onClick={self.clickHandler}>Test Clicker</button>
               <button onClick={self.reduxDispatch}>Dispatch</button>
+              <AddUser dispatchItem={self.reduxDispatch}/>
             </div>
     );
   }
@@ -50,12 +52,25 @@ class Users extends React.Component {
        this.setState({list:tmpState});
    }
 
-  reduxDispatch() {
+  // reduxDispatch() {
+  //      console.log('dispatched...');
+  //      var tmpState = this.state.list;
+  //      var user = {name:"dummy dummy", email:'dummy@icct.com', foo:'aa'};
+  //      tmpState.push(user);
+  //      this.props.actions.addUser(tmpState);
+  // }
+
+  addUserDispatch() {
        console.log('dispatched...');
-       var tmpState = this.state.list;
-       var user = {name:"dummy dummy", email:'dummy@icct.com', foo:'aa'};
-       tmpState.push(user);
-       this.props.actions.addUser(tmpState);
+
+       // this feels wrong.
+       var newName = document.getElementById('newName').value;
+       var newEmail = document.getElementById('newEmail').value;
+
+      //  userStore.dispatch({
+      //    type: 'ADD_USER',
+      //    user: {name:newName, email:newEmail}
+      //  });
   }
 
   updateList(user) {
@@ -65,9 +80,19 @@ class Users extends React.Component {
 
 }
 
+// Update the 'list' props anytime the state changes
 function mapStateToProps(state) {
-    console.log(arguments);
-    return { list: state };
+    console.log(arguments); // ???
+    return {
+      handleSubmit: function(newUser) {
+        userStore.dispatch({
+            type: 'ADD_USER',
+            user: {name:'derp', email:'derpmail'}
+        });
+      },
+
+      list: state
+    };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -76,4 +101,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Users);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps)
+  (Users); // presentational component to connect to the store
