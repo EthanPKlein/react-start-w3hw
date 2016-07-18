@@ -13,8 +13,9 @@ var AddUser = React.createClass({
       this.setState({email: e.target.value});
     },
     handleSubmit: function(e) {
+      console.log("handling submit...");
       e.preventDefault();
-      this.props.dispatchItem();
+      this.props.submitName();
       this.setState({name: '', email: ''});
     },
     render: function() {

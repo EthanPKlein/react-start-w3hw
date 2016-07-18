@@ -3,6 +3,7 @@ import {ADD_USER, CREATE_USER} from '../constants/actionTypes';
 const rootReducer = function(initialState, action) {
   var reducer = [];
   reducer[ADD_USER]  = function () {
+    console.log('adsfdsag');
     return action.list;
   }
   reducer[CREATE_USER]  = function () {

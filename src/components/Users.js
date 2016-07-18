@@ -13,8 +13,8 @@ class Users extends React.Component {
    this.state = {list:[]};
    this.render = this.render.bind(this);
    this.clickHandler = this.clickHandler.bind(this);
-   this.reduxDispatch = this.reduxDispatch.bind(this);
-   this.updateList = this.updateList.bind(this);
+   //this.reduxDispatch = this.reduxDispatch.bind(this);
+   //this.updateList = this.updateList.bind(this);
   }
 
   componentDidMount() {
@@ -40,9 +40,13 @@ class Users extends React.Component {
               </ul>
               <button onClick={self.clickHandler}>Test Clicker</button>
               <button onClick={self.reduxDispatch}>Dispatch</button>
-              <AddUser dispatchItem={self.reduxDispatch}/>
+              <AddUser submitName={self.submitNewName}/>
             </div>
     );
+  }
+
+  submitNewName() {
+    console.log("Submitting new name......");
   }
 
   clickHandler() {
@@ -52,13 +56,16 @@ class Users extends React.Component {
        this.setState({list:tmpState});
    }
 
-  // reduxDispatch() {
-  //      console.log('dispatched...');
-  //      var tmpState = this.state.list;
-  //      var user = {name:"dummy dummy", email:'dummy@icct.com', foo:'aa'};
-  //      tmpState.push(user);
-  //      this.props.actions.addUser(tmpState);
-  // }
+  //  reduxDispatch() {
+  //        console.log('redux Dispatched...');
+  //        var newName = document.getElementById('newName').value;
+  //        var newEmail = document.getElementById('newEmail').value;
+   //
+  //     userStore.dispatch({
+  //       type: 'ADD_USER',
+  //       user: {name:newName, email:newEmail}
+  //     });
+  //   }
 
   addUserDispatch() {
        console.log('dispatched...');
@@ -73,6 +80,8 @@ class Users extends React.Component {
       //  });
   }
 
+
+
   updateList(user) {
     var tmpState = this.state.list;
     tmpState.push(user);
@@ -84,20 +93,22 @@ class Users extends React.Component {
 function mapStateToProps(state) {
     console.log(arguments); // ???
     return {
-      handleSubmit: function(newUser) {
-        userStore.dispatch({
-            type: 'ADD_USER',
-            user: {name:'derp', email:'derpmail'}
-        });
-      },
-
       list: state
     };
 }
 
+
 function mapDispatchToProps(dispatch) {
+  console.log("mapping dipatch to props!");
   return {
-    actions: bindActionCreators(actions, dispatch)
+    //actions: bindActionCreators(actions, dispatch
+    submitNewName: function(newUser) {
+      console.log("handling reduxDispatch!");
+      dispatch({
+          type: ADD_USER,
+          user: {name:'derp', email:'derpmail'}
+      });
+    },
   };
 }
 
