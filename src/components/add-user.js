@@ -1,4 +1,5 @@
 import React from 'react'
+import {connect} from 'react-redux';
 
 var AddUser = React.createClass({
     getInitialState: function() {
@@ -33,4 +34,4 @@ var AddUser = React.createClass({
   }
 });
 
-export default AddUser;
+export default connect()(AddUser);

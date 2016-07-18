@@ -13,7 +13,7 @@ class Users extends React.Component {
    this.state = {list:[]};
    this.render = this.render.bind(this);
    this.clickHandler = this.clickHandler.bind(this);
-   //this.reduxDispatch = this.reduxDispatch.bind(this);
+   this.reduxDispatch = this.reduxDispatch.bind(this);
    //this.updateList = this.updateList.bind(this);
   }
 
@@ -46,7 +46,9 @@ class Users extends React.Component {
   }
 
   submitNewName() {
-    console.log("Submitting new name......");
+    var newName = document.getElementById('newName').value;
+    var newEmail = document.getElementById('newEmail').value;
+    console.log("Submitting new name......" + newName + ", email: " + newEmail);
   }
 
   clickHandler() {
@@ -56,23 +58,22 @@ class Users extends React.Component {
        this.setState({list:tmpState});
    }
 
-  //  reduxDispatch() {
-  //        console.log('redux Dispatched...');
-  //        var newName = document.getElementById('newName').value;
-  //        var newEmail = document.getElementById('newEmail').value;
-   //
-  //     userStore.dispatch({
-  //       type: 'ADD_USER',
-  //       user: {name:newName, email:newEmail}
-  //     });
-  //   }
+   reduxDispatch() {
+         console.log('redux Dispatched...');
+         var newName = document.getElementById('newName').value;
+         var newEmail = document.getElementById('newEmail').value;
+
+      userStore.dispatch({
+        type: 'ADD_USER',
+        user: {name:newName, email:newEmail}
+      });
+    }
 
   addUserDispatch() {
        console.log('dispatched...');
 
        // this feels wrong.
-       var newName = document.getElementById('newName').value;
-       var newEmail = document.getElementById('newEmail').value;
+
 
       //  userStore.dispatch({
       //    type: 'ADD_USER',
@@ -98,18 +99,31 @@ function mapStateToProps(state) {
 }
 
 
-function mapDispatchToProps(dispatch) {
-  console.log("mapping dipatch to props!");
+// function mapDispatchToProps(dispatch) {
+//   console.log("mapping dipatch to props!");
+//   return {
+//     //actions: bindActionCreators(actions, dispatch
+//     submitNewName: function(newUser) {
+//       console.log("handling reduxDispatch!");
+//       dispatch({
+//           type: ADD_USER,
+//           user: {name:'derp', email:'derpmail'}
+//       });
+//     },
+//   };
+// }
+
+// returns the props that use the dispatch method
+const mapDispatchToProps = (dispatch) => {
   return {
-    //actions: bindActionCreators(actions, dispatch
-    submitNewName: function(newUser) {
-      console.log("handling reduxDispatch!");
-      dispatch({
-          type: ADD_USER,
-          user: {name:'derp', email:'derpmail'}
-      });
-    },
-  };
+    submitNewName: (newName) => {
+          console.log("handling submitNewName!");
+          dispatch({
+              type: ADD_USER,
+              user: {name:'derp', email:'derpmail'}
+          });
+        }
+  }
 }
 
 export default connect(
